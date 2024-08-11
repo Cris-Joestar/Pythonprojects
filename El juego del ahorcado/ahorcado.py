@@ -62,6 +62,7 @@ class AhorcadoApp():
 
             elif "_" not in self.palabra_oculta:
                 messagebox.showinfo('Juego terminado', f'Felicidades has ganado el juego, adivinaste la palabra {self.palabra}')
+                self.reiniciar_juego()
 
     def actualizar_dibujo(self):
         self.dibujo_canvas.delete('all')
