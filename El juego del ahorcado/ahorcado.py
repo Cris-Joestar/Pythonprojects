@@ -22,9 +22,12 @@ class AhorcadoApp():
         self.iniciar_juego()
 
     def iniciar_juego(self):
-        self.palabra = obtener_palabra(palabras)
+        self.categoria, self.palabra = obtener_palabra(palabras)
         self.palabra_oculta = ['_']*len(self.palabra)
         self.vidas = 7
+
+        self.categoria_label = tk.Label(self.root, text=f'Categoria: {self.categoria}', font=self.font, bg='black', fg='orange')
+        self.categoria_label.pack(pady=10)
 
         self.palabra_label = tk.Label(self.root, text=' '.join(self.palabra_oculta), font=self.font, bg='yellow')
         self.palabra_label.pack(pady=20)
@@ -70,9 +73,11 @@ class AhorcadoApp():
         self.dibujo_canvas.create_text(150, 150, text=dibujo, font=('Courier', 14), anchor=tk.CENTER)
 
     def reiniciar_juego(self):
+        self.categoria_label.destroy()
         self.palabra_label.destroy()
         self.frame_entrada.destroy()
         self.dibujo_canvas.destroy()
+        
 
         self.iniciar_juego()
 
@@ -81,12 +86,12 @@ class AhorcadoApp():
 
 
 def obtener_palabra(palabras):
-    palabra = random.choice(palabras)
-
+    categoria = random.choice(list(palabras.keys()))
+    palabra = random.choice(palabras[categoria])
     while '-' in palabra or ' ' in palabra:
         palabra = random.choice(palabras)
     
-    return palabra.upper()
+    return categoria.upper(), palabra.upper()
 
 
 if __name__ == "__main__":
